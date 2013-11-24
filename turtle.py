@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #-----------------------------------
 # Name: Stepper Motor
 #
@@ -11,6 +12,7 @@
 # Import required libraries
 import time
 import RPi.GPIO as GPIO
+import argparse
  
 # Use BCM GPIO references
 # instead of physical pin numbers
@@ -29,11 +31,9 @@ WaitTime = 0.0075
  
 # Set all pins as output
 for pin in StepPins:
-  print "Setup pins"
   GPIO.setup(pin,GPIO.OUT)
   GPIO.output(pin, False)
 for pin in StepPins2:
-  print "Setup pins"
   GPIO.setup(pin,GPIO.OUT)
   GPIO.output(pin, False)
  
@@ -120,13 +120,38 @@ def right( steps ):
     stepperR.step(-1)
     time.sleep(WaitTime)
 
+def execute(cmdfile):
+  print "Running %s"%cmdfile
+  f = open(cmdfile, 'r')
+  for line in f:
+    tokens = line.partition(" ")
+    cmd = tokens[0].lower()
+    amount = tokens[2].lower()
+    if cmd == "left":
+      left( (int)(amount) * STEPS_PER_DEGREE )
+    if cmd == "right":
+      right( (int)(amount) * STEPS_PER_DEGREE )
+    if cmd == "forward":
+      forward( (int)(amount) * STEPS_PER_CM )
+    if cmd == "backward":
+      backward( (int)(amount) * STEPS_PER_CM )
+
 stepperR = Stepper( [24,25,8,7], "R")
 stepperL = Stepper( [22,10,9,11], "L")
 
+parser = argparse.ArgumentParser(description='Move that turtle')
+parser.add_argument('cmdfile', metavar='FILE', type=str, nargs='+', help='file containing the commands')
+args = parser.parse_args()
+#main(**vars(args))
+for file in args.cmdfile:
+  execute(file)
+
+
 #forward( 10*STEPS_PER_CM )
-for _ in xrange(4):
-  forward(5*STEPS_PER_CM)
-  left(90*STEPS_PER_DEGREE)
+#for _ in xrange(4):
+#  forward(5*STEPS_PER_CM)
+#  left(90*STEPS_PER_DEGREE)
+#coodi = 
  
 # Start main loop
 #while 1==1:
