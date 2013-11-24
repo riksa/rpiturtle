@@ -21,6 +21,8 @@ GPIO.setmode(GPIO.BCM)
 # GPIO24,GPIO25,GPIO8,GPIO7
 StepPins = [24,25,8,7]
 StepPins2 = [22,10,9,11]
+
+STEPS_PER_CM=158
  
 # Set all pins as output
 for pin in StepPins:
@@ -79,7 +81,7 @@ class Stepper(object):
     if self.stepCounter >= StepCount:
       self.stepCounter -= StepCount
 
-    print " Motor %s counter %d" %(self.name,self.stepCounter)    
+#    print " Motor %s counter %d" %(self.name,self.stepCounter)    
     for pin in range(0, 4):
       xpin = self.pins[pin]
       if Seq[self.stepCounter][pin]!=0:
@@ -92,28 +94,28 @@ class Stepper(object):
 
 def forward( steps ):
   print "Forward %s" %steps
-  for step in xrange(1,steps):
+  for step in xrange(0,steps):
     stepperL.step(1)
     stepperR.step(1)
     time.sleep(WaitTime)
 
 def backward( steps ):
   print "Backward %s" %steps
-  for step in xrange(1,steps):
+  for step in xrange(0,steps):
     stepperL.step(-1)
     stepperR.step(-1)
     time.sleep(WaitTime)
 
 def left( steps ):
   print "Left %s" %steps
-  for step in xrange(1,steps):
+  for step in xrange(0,steps):
     stepperL.step(1)
     stepperR.step(-1)
     time.sleep(WaitTime)
 
 def right( steps ):
   print "Right %s" %steps
-  for step in xrange(1,steps):
+  for step in xrange(0,steps):
     stepperL.step(-1)
     stepperR.step(1)
     time.sleep(WaitTime)
@@ -124,8 +126,10 @@ stepperR = Stepper( [22,10,9,11], "R")
  
 # Start main loop
 while 1==1:
-  forward( 100 )
-  right( 100 )
+  forward( 1 )
+#  right( 100 )
+  StepCounter+=1
+  print "StepCounter %d" %StepCounter
 #  backward( 10 )
 
       
