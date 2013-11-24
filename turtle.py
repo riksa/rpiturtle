@@ -13,7 +13,8 @@
 import time
 import RPi.GPIO as GPIO
 import argparse
- 
+
+GPIO.setwarnings(False) 
 # Use BCM GPIO references
 # instead of physical pin numbers
 GPIO.setmode(GPIO.BCM)
