@@ -23,6 +23,9 @@ StepPins = [24,25,8,7]
 StepPins2 = [22,10,9,11]
 
 STEPS_PER_CM=158
+STEPS_PER_DEGREE=19
+WaitTime = 0.005
+# 6800 / 360 astetta = 19/aste
  
 # Set all pins as output
 for pin in StepPins:
@@ -36,7 +39,6 @@ for pin in StepPins2:
  
 # Define some settings
 StepCounter = 0
-WaitTime = 0.01
  
 # Define simple sequence
 StepCount1 = 4
@@ -122,7 +124,10 @@ def right( steps ):
 stepperL = Stepper( [24,25,8,7], "L")
 stepperR = Stepper( [22,10,9,11], "R")
 
-forward( 10*STEPS_PER_CM )
+#forward( 10*STEPS_PER_CM )
+for _ in xrange(4):
+  forward(5*STEPS_PER_CM)
+  left(90*STEPS_PER_DEGREE)
  
 # Start main loop
 #while 1==1:
