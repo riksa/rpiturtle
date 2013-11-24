@@ -90,8 +90,6 @@ class Stepper(object):
       else:
         GPIO.output(xpin, False)
 
-
-
 def forward( steps ):
   print "Forward %s" %steps
   for step in xrange(0,steps):
@@ -123,13 +121,14 @@ def right( steps ):
 # waarin pain
 stepperL = Stepper( [24,25,8,7], "L")
 stepperR = Stepper( [22,10,9,11], "R")
+
+forward( 10*STEPS_PER_CM )
  
 # Start main loop
-while 1==1:
-  forward( 1 )
-#  right( 100 )
-  StepCounter+=1
-  print "StepCounter %d" %StepCounter
+#while 1==1:
+#  right( 1 )
+#  StepCounter+=1
+#  print "StepCounter %d" %StepCounter
 #  backward( 10 )
 
       
