@@ -24,7 +24,7 @@ StepPins2 = [22,10,9,11]
 
 STEPS_PER_CM=158
 STEPS_PER_DEGREE=19
-WaitTime = 0.005
+WaitTime = 0.0075
 # 6800 / 360 astetta = 19/aste
  
 # Set all pins as output
@@ -109,20 +109,19 @@ def backward( steps ):
 def left( steps ):
   print "Left %s" %steps
   for step in xrange(0,steps):
-    stepperL.step(1)
-    stepperR.step(-1)
+    stepperL.step(-1)
+    stepperR.step(1)
     time.sleep(WaitTime)
 
 def right( steps ):
   print "Right %s" %steps
   for step in xrange(0,steps):
-    stepperL.step(-1)
-    stepperR.step(1)
+    stepperL.step(1)
+    stepperR.step(-1)
     time.sleep(WaitTime)
 
-# waarin pain
-stepperL = Stepper( [24,25,8,7], "L")
-stepperR = Stepper( [22,10,9,11], "R")
+stepperR = Stepper( [24,25,8,7], "R")
+stepperL = Stepper( [22,10,9,11], "L")
 
 #forward( 10*STEPS_PER_CM )
 for _ in xrange(4):
